@@ -14,18 +14,21 @@ goodness.
 
 ## Installation
 
-Just dump all the files in your dropbox. Don't want to have a bunch of files
-cluttering up your dropbox? Get the single file version from my gist here:
-https://gist.github.com/3398421
+Just dump all the files in the Public directory on your dropbox. 
+
+Don't want to have a bunch of files cluttering up your dropbox? Get the 
+single file version from my gist here: https://gist.github.com/3398421
 
 (The single file version may become wonky in firefox for some reason.)
 
 ## Usage
 
 First, you need a text file. For your convenience I have included, as a 
-demo, a copy of the _Constitution of the United States of America_ in
-`usa.txt`. To access this file, just go to `path/to/script/reader.html?usa`,
-piece of cake!
+demo, a Markdown copy of the _Constitution of the United States of America_ 
+in `usa.txt`. To access this file, just go to 
+`path/to/script/reader.html?usa`, piece of cake!
+
+*Your text files need to be in the same directory as your script*.
 
 Should work in any modern-ish browser, including IE7 (not saying that IE7
 is in any way, shape or form a modern browser, though).
