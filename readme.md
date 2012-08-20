@@ -30,6 +30,9 @@ in `usa.txt`. To access this file, just go to
 
 *Your text files need to be in the same directory as your script*.
 
+### Live demo 
+https://dl.dropbox.com/u/58338447/reader.html?usa  (single page version)
+
 Should work in any modern-ish browser, including IE7 (not saying that IE7
 is in any way, shape or form a modern browser, though).
 
