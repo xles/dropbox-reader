@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<title>Text prettifier</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="all">
+	<link rel="stylesheet" href="screen.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="print.css" type="text/css" media="print">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<p style="text-align:center">
+		<script>
+			document.write('Loading, please wait...');
+		</script>
+		<noscript>
+			Turn on JavaScript you schmuck.
+		</noscript>
+	</p>
+	<script src="showdown.js"></script>
+	<script src="reader.js"></script>
+	<script>
+		/**
+		 * Set readFile(false); if you don't want markdown.
+		 */
+		readFile();
+	</script>
+</body>
+</html>

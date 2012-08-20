@@ -1,0 +1,22 @@
+html, body {
+	padding:0;
+	margin:0;
+	width: 100%;
+}
+@page {
+	margin-left: 1in;
+	margin-right: 1in;
+	margin-top: 1.25in;
+	margin-bottom: 1.25in;
+/*	padding-top: 1in;
+	padding-bottom: 1in;
+*/	color: #000;
+	background-color: #000;
+	font-family: Georgia, Serif;
+}
+a, .copyright {
+	display: none;
+}
+h2 {
+	page-break-after: avoid;
+}
