@@ -1,111 +1,145 @@
-/**
- * Le comment.
- */
-function readFile(md) 
-{
-	md = typeof md !== 'undefined' ? md : true;
+(function(window){
 
-	file = location.search.substring(1);
-	if (!file) {
-		document.body.innerHTML = 'No file specified.';
-		copyBlurb();
-		return false;
+	/**
+	 * Checks if file exists on the server.
+	 */
+	function fileExists(url)
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.open('HEAD', url, false);
+		xhr.send();
+		return xhr.status!==404;
 	}
-	filename = file + '.txt';
+	
+	/**
+	 * Preperes the text for rendering.
+	 */
+	function formatText(file, text)
+	{
+		var rawLink = document.createElement('a'),
+		    header = document.createElement('h1');
 
-	xhr = new XMLHttpRequest();
-	xhr.open("GET", filename, true);
-	xhr.onreadystatechange = function() {
-		document.body.innerHTML = '';
-		if (xhr.readyState == 4) {
-			if (xhr.status == 404) {
-				err = '"' + filename + '" no such file.';
-				document.body.innerHTML = err;
-			} else {
-				if(md == true)
-					text = markdown(xhr.responseText);
-				else 
-					text =    nltop(xhr.responseText);
-				
-				formatText(file, text);
+		rawLink.href = file + '.txt';
+		rawLink.innerHTML = "View raw file.";
+
+		document.body.appendChild(rawLink);
+		document.body.appendChild(text);
+
+		var article = document.body.getElementsByTagName('div')[0],
+		    leFirstChild = article.firstChild;
+		
+		while (leFirstChild.nodeType !== 1) {
+			leFirstChild = leFirstChild.nextSibling;
+		}
+
+		if (leFirstChild.nodeName !== 'H1') {
+			header.innerHTML = file.replace('-', ' ');
+			document.title = header.innerHTML;
+			article.insertBefore(header, leFirstChild);
+		} else {
+			document.title = leFirstChild.innerHTML;
+		}
+	}
+
+	/**
+	 * Runs text through a markdown parser and renderer.
+	 */
+	function markdown(str)
+	{
+		var parser = new stmd.DocParser(),
+		    renderer = new stmd.HtmlRenderer(),
+		    article = document.createElement('div');
+
+		article.innerHTML = renderer.render(parser.parse(str));
+		return article;
+	}
+
+	/**
+	 * Converts NL to <p> elements.
+	 */
+	function nltop(str) 
+	{
+		var i, paragraph,
+		    article = document.createElement('div');
+		
+		str = str.replace(/\r\n/g,"\n");
+		str = str.replace(/\n\r/g,"\n");
+		str = str.replace(/\r/g,  "\n");
+
+		str = str.split("\n\n");
+
+		for (i = 0; i < str.length; i++) {
+			if (str[i]){
+				paragraph = document.createElement('p');
+				paragraph.innerHTML = str[i];
+				article.appendChild(paragraph);
 			}
 		}
-		copyBlurb();
+		return article;
 	}
-	xhr.send(null);
-}
 
-/**
- * Le comment.
- */
-function formatText(file, text)
-{
-	rawLink = document.createElement('a');
-	rawLink.href = file + '.txt';
-	rawLink.innerHTML = "View raw file.";
-	document.body.appendChild(rawLink);
+	/**
+	 * Spits out copyright information at the bottom of the page.
+	 */
+	function copyBlurb()
+	{
+		var copy = document.createElement('div');
 
-	document.body.appendChild(text);
-	
-	article = document.body.getElementsByTagName('div')[0];
-
-	leFirstChild = article.firstChild;
-	while (leFirstChild.nodeType != 1) 
-		leFirstChild = leFirstChild.nextSibling;
-	
-	if (leFirstChild.nodeName != 'H1') {
-		header = document.createElement('h1');
-		header.innerHTML = file.replace('-', ' ');
-		document.title = header.innerHTML;
-		article.insertBefore(header, leFirstChild);
-	} else {
-		document.title = leFirstChild.innerHTML;
+		copy.className = 'copyright';
+		copy.innerHTML = 'Text prettifier &copy; xles 2012<br>'
+		               + 'Showdown markdown parser by John Fraser';
+		document.body.appendChild(copy);
 	}
-}
 
-/**
- * Le comment.
- */
-function markdown(str)
-{
-	var parser = new stmd.DocParser();
-	var renderer = new stmd.HtmlRenderer();
+	/**
+	 * Reads in a file from the server (if it exists), formats it
+	 * and renders it to the DOM tree.
+	 */
+	function readFile(md) 
+	{
+		md = md === undefined ? true : md;
 
-	article = document.createElement('div');
-	article.innerHTML = renderer.render(parser.parse(str));
-	return article;
-}
+		var xhr, i, file, filename, err, text,
+		    exts = ['.md', '.txt'];
 
-/**
- * Le comment.
- */
-function nltop(str) 
-{
-	str = str.replace(/\r\n/g,"\n");
-	str = str.replace(/\n\r/g,"\n");
-	str = str.replace(/\r/g,  "\n");
-
-	str = str.split("\n\n");
-
-	article = document.createElement('div');
-	for (line in str) {
-		if (str[line]){
-			paragraph = document.createElement('p');
-			paragraph.innerHTML = str[line];
-			article.appendChild(paragraph);
+		file = location.search.substring(1);
+		if (!file) {
+			document.body.innerHTML = 'No file specified.';
+			copyBlurb();
+			return false;
 		}
-	}
-	return article;
-}
+		for (i = 0; i < exts.length; i++) {
+			filename = file + exts[i];
+			if (fileExists(filename)) {
+				break;
+			}
+		}
 
-/**
- * Le comment.
- */
-function copyBlurb()
-{
-	copy = document.createElement('div');
-	copy.className = 'copyright';
-	copy.innerHTML = 'Text prettifier &copy; xles 2012<br>'
-			+ 'Showdown markdown parser by John Fraser';
-	document.body.appendChild(copy);
-}
+		xhr = new XMLHttpRequest();
+		xhr.open("GET", filename, true);
+		xhr.onreadystatechange = function() {
+			document.body.innerHTML = '';
+			if (xhr.readyState == 4) {
+				if (xhr.status == 404) {
+					err = '"' + filename + '" no such file.';
+					document.body.innerHTML = err;
+				} else {
+					if (md == true) {
+						text = markdown(xhr.responseText);
+					} else {
+						text =    nltop(xhr.responseText);
+					}
+					
+					formatText(file, text);
+				}
+			}
+			copyBlurb();
+		};
+		xhr.send(null);
+	}
+
+	/**
+	 * Exposes readFile to global scope.
+	 */
+	window.readFile = readFile;
+}(window));
