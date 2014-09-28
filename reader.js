@@ -68,10 +68,11 @@ function formatText(file, text)
  */
 function markdown(str)
 {
-	var converter = new Showdown.converter();
+	var parser = new stmd.DocParser();
+	var renderer = new stmd.HtmlRenderer();
 
 	article = document.createElement('div');
-	article.innerHTML = converter.makeHtml(str);
+	article.innerHTML = renderer.render(parser.parse(str));
 	return article;
 }
 
