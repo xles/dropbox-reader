@@ -45,7 +45,7 @@ however.
 
 ## Credits
 
-* Author of the Markdown parser stmd.js, John MacFarlane. Showdown can 
-be found here: https://github.com/jgm/stmd
+* Author of the Markdown parser `stmd.js`, John MacFarlane. `stmd.js` 
+can be found here: https://github.com/jgm/stmd
 
 * Markdown creator and massive diva, John Gruber.
