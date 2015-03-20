@@ -1,0 +1,3 @@
+[submodule "src/scss/style"]
+	path = src/scss/style
+	url = git@github.com:xles/style.git
