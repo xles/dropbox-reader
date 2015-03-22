@@ -19,7 +19,8 @@
     "tests"
   ],
   "dependencies": {
-    "commonmark": "~0.18.1"
+    "commonmark": "~0.18.1",
+    "Hyphenator": "git://github.com/mnater/Hyphenator#~4.3.0"
   },
   "appPath": "src"
 }

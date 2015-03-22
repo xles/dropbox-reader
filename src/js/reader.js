@@ -1,4 +1,14 @@
-(function(window){
+'use strict';
+(function(window) {
+	var config = {
+
+	};
+
+	function run(c)
+	{
+		c.markdown = c.markdown === undefined ? true : c.markdown;
+		c.fileExtensions = c.fileExtensions === undefined ? ['md','markdown','txt'] : c.fileExtensions;
+	}
 
 	/**
 	 * Checks if file exists on the server.
@@ -10,14 +20,14 @@
 		xhr.send();
 		return xhr.status!==404;
 	}
-	
+
 	/**
 	 * Preperes the text for rendering.
 	 */
 	function formatText(file, text)
 	{
 		var rawLink = document.createElement('a'),
-		    header = document.createElement('h1');
+				header = document.createElement('h1');
 
 		rawLink.href = file + '.txt';
 		rawLink.innerHTML = "View raw file.";
@@ -26,8 +36,8 @@
 		document.body.appendChild(text);
 
 		var article = document.body.getElementsByTagName('div')[0],
-		    leFirstChild = article.firstChild;
-		
+				leFirstChild = article.firstChild;
+
 		while (leFirstChild.nodeType !== 1) {
 			leFirstChild = leFirstChild.nextSibling;
 		}
@@ -47,8 +57,8 @@
 	function markdown(str)
 	{
 		var parser = new stmd.DocParser(),
-		    renderer = new stmd.HtmlRenderer(),
-		    article = document.createElement('div');
+				renderer = new stmd.HtmlRenderer(),
+				article = document.createElement('div');
 
 		article.innerHTML = renderer.render(parser.parse(str));
 		return article;
@@ -57,11 +67,11 @@
 	/**
 	 * Converts NL to <p> elements.
 	 */
-	function nltop(str) 
+	function nltop(str)
 	{
 		var i, paragraph,
-		    article = document.createElement('div');
-		
+				article = document.createElement('div');
+
 		str = str.replace(/\r\n/g,"\n");
 		str = str.replace(/\n\r/g,"\n");
 		str = str.replace(/\r/g,  "\n");
@@ -87,7 +97,7 @@
 
 		copy.className = 'copyright';
 		copy.innerHTML = 'Text prettifier &copy; xles 2012<br>'
-		               + 'Showdown markdown parser by John Fraser';
+									 + 'Showdown markdown parser by John Fraser';
 		document.body.appendChild(copy);
 	}
 
@@ -95,12 +105,12 @@
 	 * Reads in a file from the server (if it exists), formats it
 	 * and renders it to the DOM tree.
 	 */
-	function readFile(md) 
+	function readFile(md)
 	{
 		md = md === undefined ? true : md;
 
 		var xhr, i, file, filename, err, text,
-		    exts = ['.md', '.txt'];
+				exts = ['.md', '.txt'];
 
 		file = location.search.substring(1);
 		if (!file) {
@@ -129,7 +139,7 @@
 					} else {
 						text =    nltop(xhr.responseText);
 					}
-					
+
 					formatText(file, text);
 				}
 			}
