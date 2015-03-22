@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 	<title>Text prettifier</title>
 	<link rel="stylesheet" href="css/reader.css" type="text/css">
@@ -8,19 +8,23 @@
 <body>
 	<p style="text-align:center">
 		<script>
-			document.write('Loading, please wait...');
+			document.write('Loading, please wait...<br>');
+			document.write('<span class="loading-indicator">&#8258;</span>');
 		</script>
 		<noscript>
 			Turn on JavaScript you schmuck.
 		</noscript>
 	</p>
 	<script src="js/vendor/commonmark.js"></script>
+	<script src="js/vendor/Hyphenator.js"></script>
 	<script src="js/reader.js"></script>
 	<script>
 		/**
 		 * Set readFile(false); if you don't want markdown.
 		 */
-		readFile();
+		reader.run({
+			markdown: false
+		});
 	</script>
 </body>
 </html>

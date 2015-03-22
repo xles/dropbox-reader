@@ -1,0 +1,230 @@
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+@import "settings";
+
+@import
+  "components/code",
+  "components/counters",
+  "components/headers",
+  "components/print",
+  "components/quotes",
+  "components/toc",
+  "components/typography";
+
+@font-face {
+	font-family: ornaments;
+	src: url('../fonts/Nymphette.ttf');
+}
+@media screen {
+	nav#toc {
+		position: fixed;
+		z-index: 100;
+		background: #FFFFF0;
+		top: 3em;
+		left: 0;
+		padding: 2em;
+		margin-left: -25em;
+		min-width: 23em;
+		min-height: 18em;
+		border: 1px dashed #EEE8D8;
+		color: #EEE8D8;
+		max-height: 80%;
+		overflow-y: hidden;
+		transition: all 0.3s ease-in-out;
+		border-top-right-radius: 0.5em;
+		border-bottom-right-radius: 0.5em;
+	}
+
+	nav#toc h1 {
+		max-width: 19em;
+	}
+	nav#toc:hover {
+		overflow-y: auto;
+		color: initial;
+		border: 1px dashed #999;
+		width: 23em;
+		margin-left: 0;
+	}
+	nav#toc > :first-child {
+		margin-bottom: 0;
+	}
+	nav#toc .title {
+		transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		text-transform: uppercase;
+		position: absolute;
+		right: -4em;
+		top: 10em;
+	}
+	nav#toc ol {
+		padding-left: 1.5em;
+		counter-reset: item;
+	}
+	nav#toc > ol {
+		padding-left: 0;
+	}
+	nav#toc  ol li {
+		display: block;
+	}
+
+	nav#toc  ol li:before {
+		content: counters(item,".") " ";
+		counter-increment: item;
+	}
+}
+@media all {
+	h1 {
+		text-align: center;
+		text-transform: capitalize;
+	}
+	h1:before { content: "k"; }
+	h1:after  { content: "l"; }
+	h1:before, h1:after {
+		text-transform: none;
+		font-family: 'ornaments';
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+	}
+	h2:before, h3:before, h4:before, h5:before, h6:before {
+		position: absolute;
+		margin-left: -5.2em;
+		width: 5em;
+		text-align: right;
+		font-variant: normal;
+	}
+}
+@media screen, tv, projection {
+	html {
+		background-color: #EEE8D8;
+		height:100%;
+	}
+	body {
+		font-size: 12px;
+		width: 22em;
+		padding: 2em;
+		padding-top: 11%;
+		padding-bottom: 22%;
+		margin: auto;
+		background-color: #FFFFF0;
+		color: #333;
+	}
+	body > a {
+		top: -1.5em;
+		position: relative;
+	}
+	p + p {
+		margin-top: 1.5em;
+	}
+	foo {
+		-webkit-columns: 2;
+		-webkit-column-rule: 1px solid #000;
+		-webkit-column-gap: 2em;
+		overflow: scroll;
+		height: 30rem;
+	}
+	a {
+		color: #999;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	#colophon {
+		font-variant: small-caps;
+		letter-spacing: 0.1em;
+		margin-top: 2em;
+		border-top: 1px solid #EEE8D8;
+		padding: 1em;
+		font-size:0.8em;
+		text-align: center;
+	}
+	nav#toc {
+		display: none;
+	}
+	.loading-indicator {
+		-webkit-animation:spin 0.5s linear infinite;
+		-moz-animation:spin 0.5s linear infinite;
+		animation:spin 0.5s linear infinite;
+	}
+	@-moz-keyframes spin {
+		100% {
+			-moz-transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes spin {
+		100% {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+	@keyframes spin {
+		100% {
+			-webkit-transform: rotate(360deg);
+			transform:rotate(360deg);
+		}
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+	body {
+		font-size: 16px;
+		width: 22em;
+		padding: 6em;
+	}
+}
+@media screen and (min-width: 1025px) {
+	body {
+		font-size: 16px;
+		width: 33em;
+		padding: 6em;
+	}
+	nav#toc {
+		display: block;
+	}
+}
+@media screen and (min-width: 1920px) {
+	body {
+		font-size: 18px;
+	}
+}
+@media tv, projection {
+	body {
+		font-size: 17px;
+	}
+}
+@media tv and (min-width: 1280px), projection and (min-width: 1280px) {
+	body {
+		font-size: 34px;
+	}
+}
+@media tv and (min-width: 1920px), projection and (min-width: 1920px) {
+	body {
+		font-size: 51px;
+	}
+}
+@media print {
+	body {
+		counter-reset: page 1;
+	}
+	a:after{
+		content:" (" attr(href) ") ";
+		font-size:0.8em;
+		font-weight:normal;
+	}
+	#colophon, #toc, #raw-file {
+		display: none;
+	}
+	@page {
+		margin-top: 74.4pt;
+		margin-bottom: 120.4pt;
+	}
+	@page:left {
+		margin-left: 120.4pt;
+		margin-right: 74.4pt;
+	}
+
+	@page:right {
+		margin-left: 74.4pt;
+		margin-right: 120.4pt;
+	}
+}

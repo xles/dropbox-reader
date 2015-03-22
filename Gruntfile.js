@@ -93,6 +93,14 @@ module.exports = function (grunt) {
 					]
 				}]
 			},
+			doc: {
+				files: [{
+					dot: true,
+					src: [
+						'doc/**/*'
+					]
+				}]
+			},
 			server: '.tmp'
 		},
 
@@ -132,7 +140,7 @@ module.exports = function (grunt) {
 				imagesDir: 'src/images',
 				javascriptsDir: 'src/js',
 				fontsDir: 'src/styles/fonts',
-				importPath: './bower_components',
+				importPath: ['./bower_components', 'src/scss/style/scss'],
 				httpImagesPath: '/images',
 				httpGeneratedImagesPath: '/images/generated',
 				httpFontsPath: '/styles/fonts',
@@ -178,7 +186,7 @@ module.exports = function (grunt) {
 				dest: 'dist/js/reader.js',
 			},
 			css: {
-				src: ['.tmp/css/**/*.css'],
+				src: ['.tmp/css/*.css'],
 				dest: 'dist/css/reader.css',
 			}
 		},
@@ -276,7 +284,8 @@ module.exports = function (grunt) {
 			dist: [
 				'compass:dist',
 				'imagemin',
-				'svgmin'
+				'svgmin',
+				'doc'
 			]
 		},
 		inline: {
@@ -288,6 +297,17 @@ module.exports = function (grunt) {
 				},
 				src: 'dist/reader.html',
 				dest: 'dist/single.html'
+			}
+		},
+		jsdoc : {
+			dist : {
+				options: {
+					destination: 'doc',
+//					template : 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+//					configure : 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json'
+				},
+//				src: ['src/js/reader.js']
+				src: ['src/js/**/*.js', 'README.md', 'package.json']
 			}
 		}
 	});
@@ -317,7 +337,12 @@ module.exports = function (grunt) {
 		'clean:server',
 		'concurrent:test',
 		'autoprefixer',
-		'connect:test',
+		'connect:test'
+	]);
+
+	grunt.registerTask('doc', [
+		'clean:doc',
+		'jsdoc'
 	]);
 
 	grunt.registerTask('build', [
