@@ -162,6 +162,9 @@ module.exports = function (grunt) {
 
     cssmin: {
       dist: {
+        options: {
+          shorthandCompacting: false
+        },
         files: {
           'dist/css/reader.min.css': [
             'dist/css/reader.css'

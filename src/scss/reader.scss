@@ -7,10 +7,10 @@
   "components/code",
   "components/counters",
   "components/headers",
-  "components/print",
   "components/quotes",
   "components/toc",
-  "components/typography";
+  "components/typography",
+  "components/print";
 
 @font-face {
 	font-family: ornaments;
@@ -79,8 +79,6 @@
 		display: none;
 	}
 	.loading-indicator {
-		-webkit-animation:spin 0.5s linear infinite;
-		-moz-animation:spin 0.5s linear infinite;
 		animation:spin 0.5s linear infinite;
 	}
 	@keyframes spin {
