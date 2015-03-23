@@ -43,9 +43,15 @@ I haven't spent much time checking how well it works with unclean file
 names. I do know it will work with any civilised `a-z0-9._-` file name
 however.
 
-## Credits
+## Colophon
 
-* Author of the Markdown parser `stmd.js`, John MacFarlane. `stmd.js` 
-can be found here: https://github.com/jgm/stmd
+* `Hyphenator.js` hyphenation library by 
+  [Mathias Nater](https://github.com/mnater/Hyphenator).
+
+* Nymphette ornamental font by 
+  [Lauren Thompson](http://www.nymfont.com/2009/08/nymphette-font.html).
+
+* `commonmark.js` Markdown parser, by 
+  [John MacFarlane](https://github.com/jgm/commonmark.js).
 
 * Markdown creator and massive diva, John Gruber.
