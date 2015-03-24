@@ -229,7 +229,6 @@ module.exports = function (grunt) {
           removeOptionalTags: false
         },
         files: {
-          'dist/reader.min.html': 'dist/reader.html',
           'dist/single.html': 'dist/single.html'
         }
       }
@@ -268,6 +267,12 @@ module.exports = function (grunt) {
           dest: 'dist/js/vendor'
         }]
       },
+      doc: {
+        expand: true,
+        cwd: 'doc',
+        dest: '../docs/',
+        src: '**'
+      },
       styles: {
         expand: true,
         cwd: 'src/scss',
@@ -288,7 +293,7 @@ module.exports = function (grunt) {
         'compass:dist',
         'imagemin',
         'svgmin',
-        'doc'
+        'docs'
       ]
     },
     inline: {
@@ -310,7 +315,22 @@ module.exports = function (grunt) {
 //          configure : 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json'
         },
 //        src: ['src/js/reader.js']
-        src: ['src/js/**/*.js', 'README.md', 'package.json']
+        src: ['src/js/**/*.js', 'README.md']
+      }
+    },
+
+    shell: {
+      publishDocs: {
+        options: {
+          execOptions: {
+            cwd: '../docs/'
+          }
+        },
+        command: [
+          'git add .',
+          'git commit -m "Updated documentation."',
+          'git push'
+        ].join('&&')
       }
     },
 
@@ -356,11 +376,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
-
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
@@ -368,9 +383,16 @@ module.exports = function (grunt) {
     'connect:test'
   ]);
 
-  grunt.registerTask('doc', [
+  grunt.registerTask('docs', [
     'clean:doc',
-    'jsdoc'
+    'jsdoc',
+    'copy:doc'
+  ]);
+
+  grunt.registerTask('styles', [
+    'compass:dist',
+    'concat:css',
+    'cssmin'
   ]);
 
   grunt.registerTask('build', [

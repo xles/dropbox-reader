@@ -22,6 +22,56 @@ https://gist.github.com/3398421
 
 (The single file version may become wonky in firefox for some reason.)
 
+### Options
+
+```
+reader.run({
+	adjustViewport: true,
+	fileExtensions: ['md','markdown','txt'],
+	hyphenator: true,
+	markdown: true,
+	tableOfContents: true
+});
+```
+
+#### `adjustViewport` (boolean)
+
+Runs a small script that automatically adjusts the `rem` size to scale
+the viewport (primarilly for mobile devices).
+
+Default value:  `true`
+
+#### `fileExtensions` (array)
+
+The list of valid file extensions.  The order of the array is the order
+in which the script searches for files.
+
+Default value:  `['md','markdown','txt']`
+
+#### `hyphenator` (boolean)
+
+Hyphenates the text document with the `Hyphenator.js` library.  If set 
+to `false` it will also make the text jagged right rather than justified.
+
+Default value:  `true`
+
+#### `markdown` (boolean)
+
+If set to `true` it will treat all documents as markdown documents and 
+run them through the `commonmark.js` markdown parser.  Setting this to 
+`false` will instead run a quick and dirty script that turns dual line
+breaks into `<p>` elements.
+
+Default value:  `true`
+
+#### `tableOfContents` (boolean)
+
+If enabled it will auto-generate a table of contents for the parsed 
+document.  If `markdown` is disabled, this setting will have no effect.
+
+Default value:  `true`
+
+
 ## Usage
 
 First, you need a text file. For your convenience I have included, as 

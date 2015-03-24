@@ -24,6 +24,7 @@
     "grunt-inline": "^0.3.4",
     "grunt-jsdoc": "^0.5.8",
     "grunt-newer": "^1.1.0",
+    "grunt-shell": "^1.1.2",
     "grunt-svgmin": "^2.0.1",
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
